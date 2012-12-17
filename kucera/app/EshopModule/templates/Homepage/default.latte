@@ -1,0 +1,10 @@
+{var $title = 'Eshop'}
+{block content}
+<h1>E-shop</h1>
+
+<table>
+    <th>Kategorie</th>
+    <tr n:foreach="$categoryList as $list" n:class="$iterator->isOdd() ? odd : even">
+        <td><a n:href=":Eshop:Category: $list->id">{$list->title}</a></td>
+    </tr>
+</table>

@@ -1,0 +1,16 @@
+
+{block content}
+<h2>Seznam produktů</h2>
+
+
+{form newProductList}
+        {control $form errors}
+
+        {label text /} <br />
+        {input text size => 20}<br />
+        {label categoryId /} <br />
+        {input categoryId} {input create}
+{/form}
+
+
+{control plist}

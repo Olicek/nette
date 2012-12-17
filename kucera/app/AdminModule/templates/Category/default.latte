@@ -1,0 +1,46 @@
+
+{block content}
+<h2>Kategorie</h2>
+
+{form newCategory}
+<div>
+    {control $form errors}
+    <div class="pair">
+        {label text /} <br />
+        {input text size => 20} {input create}
+    </div>
+</div>
+{/form}
+{snippet form}
+<table>
+    <thead>
+    <tr>
+        <th>Zobrazeno</th>
+        <th>id</th>
+        <th>Název</th>
+        <th>Editovat</th>
+        <th>Odstranit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr n:foreach="$categoryList as $list" n:class="$iterator->isOdd() ? odd : even">
+        <td>
+            <a n:if="$list->published" class="icon tick ajax" n:href="markUnPublished! $list->id"></a>
+            <a n:if="!$list->published" class="icon untick ajax" n:href="markPublished! $list->id"></a>
+        </td>
+
+        <td>{$list->id}</td>
+        <td><a n:href="ProductList: $list->id">{$list->title}</a></td>
+        <td>
+            {form editCategory class => ajax}
+                {control $form errors}
+                <span class="icon edit" title="editovat"></span>
+                {input editId value => $list->id}
+                {input text size => 15} {input create}
+            {/form}
+        </td>
+        <td><a n:href="deleteCategory! $list->id" class="icon delete ajax" title="smazat"></a></td>
+    </tr>
+    </tbody>
+</table>
+{/snippet}

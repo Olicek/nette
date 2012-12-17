@@ -1,0 +1,1 @@
+<?php/** * Homepage presenter. * * @author     John Doe * @package    MyApplication */class HomepagePresenter extends BasePresenter{	public function renderDefault()	{	}        public function renderAbout($date)        {            $this->template->date = $date;        }        public function actionAbout()        {                    }}

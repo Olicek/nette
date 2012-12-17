@@ -1,0 +1,79 @@
+
+{block content}
+<h2>{$productList->title}</h2>
+<span class="icon edit opener">Vložin tový produkt</span>
+<script>
+// increase the default animation speed to exaggerate the effect
+$.fx.speeds._default = 1000;
+$(function() {
+    $( "#dialog" ).dialog({
+            autoOpen: false,
+            show: "explode",
+            hide: "explode",
+            closeText: "hide",
+            draggable: false,
+            resizable: false,
+            modal: true,
+            width: 600,
+            title: "Editace produktu"
+    });
+
+    $( ".opener" ).click(function() {
+            $( "#dialog" ).dialog( "open" );
+            return false;
+    });
+});
+</script>
+
+
+<div id="dialog">
+{form newProduct}
+        {control $form errors}
+
+        {label title /} {input title size => 20}<br />
+        {label description /} {input description size => 20}<br />
+        {label text /} {input text size => 20}<br />
+        {label price /} {input price size => 20}<br />
+        {label foto /} {input foto size => 20}<br />
+        <br />
+        {input create}
+{/form}
+</div>
+{snippet item}
+<table>
+    <thead>
+    <tr>
+        <th>Zobrazeno</th>
+        <th>id</th>
+        <th>Název</th>
+        <th>popis</th>
+        <th>Cena</th>
+        <th>Vloženo</th>
+        <th>Náhled</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr n:foreach="$product as $list" n:class="$iterator->isOdd() ? odd : even">
+        {snippet item-$list->id}
+        <td>
+            <a n:if="$list->published" class="icon tick ajax" n:href="markUnPublished! $list->id"></a>
+            <a n:if="!$list->published" class="icon untick ajax" n:href="markPublished! $list->id"></a>   
+        </td>
+        <td>{$list->id}</td>
+        <td><a n:href="Product:detail $list->id">{$list->title}</a></td>
+        <td>{$list->description}</td>
+        <td>{$list->price} Kč</td>
+        <td>{$list->created}</td>
+        {foreach $images as $image}
+            {if $image->product_id == $list->id}
+                <td>
+                    <img src="{$basePath}{$image->path}thumb/{$image->name}" alt="" />
+                </td>
+                {breakIf ($image->product_id == $list->id)}
+            {/if}
+        {/foreach}
+        {/snippet}
+    </tr>
+    </tbody>
+</table>
+{/snippet}

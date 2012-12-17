@@ -1,0 +1,35 @@
+
+{block content}
+
+<table>
+    <thead>
+    <tr>
+        <th>Zobrazeno</th>
+        <th>id</th>
+        <th>Název</th>
+        <th>Kategorie</th>
+        <th>Editovat</th>
+        <th>Odstranit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr n:foreach="$pList as $plist" n:class="$iterator->isOdd() ? odd : even">
+        <td>
+            <a n:if="$plist->published" class="icon tick" n:href="markUnPublished! $plist->id"></a>
+            <a n:if="!$plist->published" class="icon untick" n:href="markPublished! $plist->id"></a>
+        </td>
+        <td>{$plist->id}</td>
+        <td><a href="{plink :Admin:Product: $plist->id}">{$plist->title}</a></td>
+        <td><a href="{plink :Admin:ProductList: $plist->categorylist->id}">{$plist->categorylist->title}</a></td>
+        <td>
+            {form editProductList}
+                {control $form errors}
+                <span class="icon edit" title="editovat"></span>
+                {input editId value => $plist->id}
+                {input text size => 15} {input create}
+            {/form}
+        </td>
+        <td><a n:href="deleteProductList! $plist->id" class="icon delete" title="smazat"></a></td>
+    </tr>
+    </tbody>
+</table>

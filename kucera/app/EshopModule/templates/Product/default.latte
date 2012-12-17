@@ -1,0 +1,30 @@
+{var $title = $productList->title}
+{block content}
+<h1>{$productList->title}</h1>
+<div class="box" n:foreach="$product as $list" n:class="$iterator->isOdd() ? odd : even" 
+     n:if="$list->published && $productList->id == $list->productlist_id">
+    <div class="tm">
+        {foreach $images as $image}
+            {if $image->product_id == $list->id}
+                <div class="imgbox">
+                    <a n:href=":Eshop:Product:detail $list->id">
+                        <img src="{$basePath}{$image->path}thumb/{$image->name}" alt="{$image->name}" />
+                    </a>
+                </div>
+                {breakIf ($image->product_id == $list->id)}
+            {/if}
+        {/foreach}
+        <h2><a n:href=":Eshop:Product:detail $list->id">{$list->title}</a></h2>
+        <div class="price">
+            <div class="cena">{$list->price} Kč</div>
+            <div class="kosik">
+                {if $user->isAllowed('product', 'buy')}
+                <a href="">Košík</a>
+                {else}
+                <acronym title="Pro nákup se musíte přihlásit">Košík</acronym>
+                {/if}
+            </div>
+        </div>
+    </div>
+        <p>{$list->description}</p>
+</div>

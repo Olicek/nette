@@ -1,0 +1,7 @@
+{var $title = $category->title}
+{block content}
+<h1>{$category->title}</h1>
+<div class="box" n:foreach="$productList as $list" n:class="$iterator->isOdd() ? odd : even" 
+     n:if="$list->published && $category->id == $list->categorylist_id">
+        <h2><a n:href=":Eshop:Product:default $list->id">{$list->title}</a></h2>
+</div>

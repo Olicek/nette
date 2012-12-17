@@ -1,0 +1,96 @@
+{**
+ * Zamecnictvi kucera layout template.
+ *
+ * @copyright  Copyright (c) 2012 Petr Olišar
+ * @package    zamecnictvi
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<meta name="description" content="Nette Framework web application skeleton">
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+
+	<title>{ifset $title}{$title} &ndash; {/ifset}Zámečnictví Kučera</title>
+
+        <link rel="stylesheet" href="{$basePath}/js/jquery/css/jquery-ui-1.8.16.custom.css" type="text/css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css" type="text/css">
+	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css" type="text/css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
+
+	<script type="text/javascript" src="{$basePath}/js/jquery/jquery.js"></script>
+        <script type="text/javascript" src="{$basePath}/js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" src="{$basePath}/js/jquery.nette.js"></script>
+        <script type="text/javascript" src="{$basePath}/js/netteForms.js"></script>
+        <script type="text/javascript" src="{$basePath}/js/ajax.js"></script>
+	{block head}{/block} 
+</head>
+
+<body> 
+    <div id="master">
+        <div id="header">
+            <h1><span>ZÁMEČNICTVÍ KUČERA</span></h1>
+            <h2>Odemkněte s námi Vaše životy!</h2>
+            <div id="admin-menu">
+                <a n:href=":Homepage:">Hlavní stránka</a>
+                <a n:href=":Admin:Homepage:default">Administrace</a><br />
+                {if $user->isLoggedIn()}
+                    <span class="icon user">{$user->getIdentity()->name}</span>
+                    <a n:href=":User:password">Změna hesla</a>
+                    <a n:href="signOut!">Odhlásit</a>
+                {else}                
+                    <a n:href=":Sign:in">Přihlásit</a>
+                    <a n:href=":Sign:new">Registrovat</a>
+                {/if}
+            </div>
+        </div>
+        <div id="menu">
+            <ul>
+                <li><a n:href=":Homepage:">Hlavní stránka</a></li>
+                <li><a n:href=":Homepage:about">O nás</a></li>
+                <li><a n:href=":Eshop:Homepage:default">E-shop</a></li>
+                <li><a n:href=":Contact:">Kontakt</a></li>
+                
+            </ul>
+        </div>
+        <div id="contentBox">
+            <div id="leftmenu">
+                <ul>
+                    {foreach $categoryList_menu as $category}
+                    <li n:if="$category->published">
+                        <a n:href=":Eshop:Category:default $category->id">{$category->title}</a>
+                        <ul class="submenu">
+                            {foreach $productList_menu as $product}
+                                {if ($category->id == $product->categorylist_id)}
+                                    <li n:if="$product->published">
+                                        <a  n:href=":Eshop:Product:default $product->id">{$product->title}</a>
+                                    </li>
+                                {/if}
+                            {/foreach}
+                        </ul>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+            <div id="content">
+                <div id="contentIn">
+                    <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+                    {include #content}
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <a href="#">Mapa stránek</a> |
+            <a href="#">Tisknout stránku</a> |
+            <a n:href=":Contact:">Kontaktujte nás</a> <br />
+            2012 Kučera zámečnictví
+        </div>
+    </div>
+</body>
+</html>

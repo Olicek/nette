@@ -1,0 +1,27 @@
+{block content}
+{var $title = 'Registrace nového uživatele'}
+<h1>Registrace</h1>
+
+{form newUser}
+<div class="sign-in-form">
+    {control $form errors}
+
+    <div class="pair">
+        {label username /}
+        <div class="input">{input username}</div>
+    </div>
+    <div class="pair">
+        {label password /}
+        <div class="input">{input password}</div>
+    </div>
+    <div class="pair">
+        {label name /}
+        <div class="input">{input name}</div>
+    </div>
+
+    <div class="pair">
+        <div class="input">{input register}</div>
+    </div>
+</div>
+{/form}
+<a n:href="Sign:in">Přihlášení</a>

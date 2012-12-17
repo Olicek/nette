@@ -1,0 +1,24 @@
+{var $title = 'Kontakt'}
+{block content}
+<div id="contentIn">
+    <h1>Kontaktní formulář</h1>
+    <p>Pomocí tohoto formuláře nám můžete napsat vzkaz, na který Vám odpovíme v co možná nejkraším čase.</p>
+    {form contactForm}
+        <div class="contact-form">
+            {control $form errors}
+            <div class="pair">
+            {label name /} {input name size => 30, autofocus => true} 
+            </div>
+            <div class="pair">
+            {label email /} {input email} 
+            </div>
+            <div class="pair">
+            {label subject /} {input subject} 
+            </div>
+            <div class="pair">
+            {label message /} {input message}
+            </div>
+            {input send}
+        </div>
+    {/form}
+</div>

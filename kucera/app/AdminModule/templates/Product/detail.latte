@@ -1,0 +1,83 @@
+
+{block content}
+<div id="detail">
+    <a n:href="Product: $product->productlist_id">zpět</a>
+    <div id="options">
+        <a n:href="deleteProduct! $product->id, $product->productlist_id" class="icon untick">smazat</a>
+        <span class="icon edit opener">editovat</span>
+    </div>
+    
+    <h2><a n:if="$product->published" class="icon tick" n:href="markUnPublished! $product->id"></a>
+        <a n:if="!$product->published" class="icon untick" n:href="markPublished! $product->id"></a>
+        {$product->title}
+    </h2>
+    
+    <div class="content">
+        <div class="box">
+            <span n:foreach="$images as $image">
+                <img src="{$basePath}{$image->path}/thumb/{$image->name}" alt="" />
+            </span>
+        </div>
+        <div class="box">
+            <p>{$product->description}</p>
+            <p>{$product->price} Kč</p>
+            
+            <p>{$product->created}</p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="content">
+        <p>{$product->text}</p>
+    </div>
+</div>
+
+
+<script>
+// increase the default animation speed to exaggerate the effect
+$.fx.speeds._default = 1000;
+$(function() {
+    $( "#dialog" ).dialog({
+            autoOpen: false,
+            show: "explode",
+            hide: "explode",
+            closeText: "hide",
+            draggable: false,
+            resizable: false,
+            modal: true,
+            width: 600,
+            title: "Editace produktu"
+    });
+
+    $( ".opener" ).click(function() {
+            $( "#dialog" ).dialog( "open" );
+            return false;
+    });
+});
+
+$('.untick').click(function(e){
+    if (!confirm('Skutečně chcete odstranit?')){
+        e.preventDefault();
+        return false;
+    }
+    
+});
+</script>
+
+<div id="dialog">
+{form editProduct}
+    {control $form errors}
+    <div class="pair">
+        {label title /} {input title size => 20}
+    </div>
+    <div class="pair">
+        {label description /} {input description size => 20}
+    </div>
+    <div class="pair">
+        {label text /} {input text size => 20}
+    </div>
+    <div class="pair">
+        {label price /} {input price size => 20}
+    </div>
+    {input create}
+{/form}
+</div>

@@ -1,0 +1,37 @@
+
+{block content}
+<h3>Seznam produktů pro kategorii {$categoryList->title}</h3>
+
+{form newProductList}
+        {control $form errors}
+
+        {label text /} <br />
+        {input text size => 20}
+        {label categoryId /} <br />
+        {input categoryId} {input create}
+{/form}
+{snippet table}
+<table>
+    <thead>
+    <tr>
+        <th>Zobrazeno</th>
+        <th>id</th>
+        <th>Název</th>
+        <th>Editovat</th>
+        <th>Odstranit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr n:foreach="$productList as $plist" n:class="$iterator->isOdd() ? odd : even">
+        <td>
+            <a n:if="$plist->published" class="icon tick ajax" n:href="markUnPublished! $plist->id"></a>
+            <a n:if="!$plist->published" class="icon untick ajax" n:href="markPublished! $plist->id"></a>
+        </td>
+        <td>{$plist->id}</td>
+        <td><a n:href="Product: $plist->id">{$plist->title}</a></td>
+        <td><a href="" class="icon edit opener" title="editovat"></a></td>
+        <td><a n:href="deleteProductList! $plist->id" class="icon delete" title="smazat"></a></td>
+    </tr>
+    </tbody>
+</table>
+{/snippet}
